@@ -4,8 +4,7 @@ const ikkulist = document.querySelector('.ikkuList');
 const url = 'http://localhost:3000/ikku';
 
 
-// Create button
-const createBtn = (className, text) => {
+const appendBtn = (className, text) => {
     const btn = document.createElement('button');
     btn.className = className;
     btn.innerHTML = text;
@@ -13,14 +12,13 @@ const createBtn = (className, text) => {
 };
 
 
-// Append list
 const appendList = (thisData) => {
     const li = document.createElement('li');
     li.dataset.id = thisData.id;
     li.innerHTML = thisData.ikku;
-    const updateBtn = createBtn('updateBtn', '修正');
+    const updateBtn = appendBtn('doUpdate', '修正');
     li.appendChild(updateBtn);
-    const deleteBtn = createBtn('deleteBtn', '削除');
+    const deleteBtn = appendBtn('doDelete', '削除');
     li.appendChild(deleteBtn);
     ikkulist.appendChild(li);
 };
@@ -70,3 +68,80 @@ const readFetch = () => {
     });
 };
 readFetch();
+
+
+// Update
+const appendUpdateInput =  (thisIkku) => {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.name = 'updateIkku';
+    input.size = '30';
+    input.maxlength = '30px';
+    input.className = 'updateIkku';
+    input.value = thisIkku;
+    return input;
+};
+
+
+const appendUpdateBtn = () => {
+    const btn = document.createElement('input');
+    btn.type = 'button';
+    btn.value = '送信';
+    btn.className = 'updateBtn';
+    return btn;
+};
+
+
+const appendUpdateArea = (thisLi) => {
+    const thisIkku = thisLi.firstChild.textContent;
+    const appendDiv = document.createElement('div');
+    appendDiv.className = 'updateArea';
+    appendDiv.appendChild(appendUpdateInput(thisIkku));
+    appendDiv.appendChild(appendUpdateBtn());
+    thisLi.appendChild(appendDiv);
+};
+
+
+document.addEventListener('click', (e) => {
+    if (e.target.className ==='doUpdate') {
+        const thisLi = e.target.closest('li');
+        appendUpdateArea(thisLi);
+    } 
+}, false);
+
+
+const updateFetch = (thisLi, thisId, data) => {
+    const updateUrl = url + '/' + thisId;
+    const updateArea = thisLi.querySelector('.updateArea');
+    fetch(updateUrl, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then((response) => {
+        if(!response.ok) {
+            console.log('error!');
+        } 
+        console.log('ok!');
+        return response.json();
+    }).then((data)  => {
+        thisLi.firstChild.textContent = data.ikku;
+        thisLi.removeChild(updateArea);
+    }).catch((error) => {
+        console.log(error);
+    });
+};
+
+document.addEventListener('click', (e) => {
+    if (e.target.className ==='updateBtn') {
+        const thisLi = e.target.closest('li');
+        const thisId = thisLi.dataset.id;
+        const thisInput = thisLi.querySelector('.updateIkku').value;
+        console.log(thisInput);
+        const data = {
+            ikku: thisInput
+        };
+        updateFetch(thisLi, thisId, data);
+    } 
+}, false);
