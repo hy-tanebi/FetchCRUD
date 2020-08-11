@@ -1,13 +1,26 @@
 const postIkku = document.querySelector('.postIkku');
 const postBtn = document.querySelector('.postBtn');
-const ikkulist = document.querySelector('.ikkuDl');
+const ikkulist = document.querySelector('.ikkuList');
 const url = 'http://localhost:3000/ikku';
 
 const appendList = (thisData) => {
-    const li = document.createElement("li");
+    const li = document.createElement('li');
     li.dataset.id = thisData.id;
     li.innerHTML = thisData.ikku;
-    ikkulist.appendChild(li);    
+
+    const makeBtn = (className, text) => {
+        const btn = document.createElement('button');
+        btn.className = className;
+        btn.innerHTML = text;
+        return btn;
+    };
+
+    const updateBtn = makeBtn('updateBtn', '修正');
+    const deleteBtn = makeBtn('deleteBtn', '削除');
+    
+    ikkulist.appendChild(li);
+    li.appendChild(updateBtn);
+    li.appendChild(deleteBtn);
 };
 
 // Create
