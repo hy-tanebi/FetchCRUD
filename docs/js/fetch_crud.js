@@ -77,9 +77,9 @@ const createFetch = () => {
         body: JSON.stringify(data)
     }).then((response) => {
         if(!response.ok) {
-            console.log('error!');
+            console.log('Create error!');
         } 
-        console.log('ok!');
+        console.log('Create ok!');
         return response.json();
     }).then((data)  => {
         appendList(data);
@@ -94,9 +94,9 @@ postBtn.addEventListener('click', createFetch, false);
 const readFetch = () => {
     fetch(url).then((response) => {
         if(!response.ok) {
-            console.log('error!');
+            console.log('Read error!');
         } 
-        console.log('ok!');
+        console.log('Read ok!');
         return response.json();
     }).then((data)  => {
         for (let i = 0; i < data.length; i++) {
@@ -128,9 +128,9 @@ const updateFetch = (thisLi) => {
         body: JSON.stringify(data)
     }).then((response) => {
         if(!response.ok) {
-            console.log('error!');
+            console.log('Update error!');
         } 
-        console.log('ok!');
+        console.log('Update ok!');
         return response.json();
     }).then((data)  => {
         thisLi.firstChild.textContent = data.ikku;
@@ -144,5 +144,32 @@ document.addEventListener('click', (e) => {
     if (e.target.className ==='updateBtn') {
         const thisLi = e.target.closest('li');
         updateFetch(thisLi);
+    } 
+}, false);
+
+
+// Delete
+const deleteFetch = (thisLi) => {
+    const thisId = thisLi.dataset.id;
+    const updateUrl = url + '/' + thisId;
+    
+    fetch(updateUrl, {
+        method: 'DELETE',
+    }).then((response) => {
+        if(!response.ok) {
+            console.log('Delete error!');
+        } 
+        console.log('Delete ok!');
+    }).then(()  => {
+        thisLi.remove()
+    }).catch((error) => {
+        console.log(error);
+    });
+};
+
+document.addEventListener('click', (e) => {
+    if (e.target.className ==='doDelete') {
+        const thisLi = e.target.closest('li');
+        deleteFetch(thisLi);
     } 
 }, false);
