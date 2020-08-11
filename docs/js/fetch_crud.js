@@ -3,25 +3,28 @@ const postBtn = document.querySelector('.postBtn');
 const ikkulist = document.querySelector('.ikkuList');
 const url = 'http://localhost:3000/ikku';
 
+
+// Create button
+const createBtn = (className, text) => {
+    const btn = document.createElement('button');
+    btn.className = className;
+    btn.innerHTML = text;
+    return btn;
+};
+
+
+// Append list
 const appendList = (thisData) => {
     const li = document.createElement('li');
     li.dataset.id = thisData.id;
     li.innerHTML = thisData.ikku;
-
-    const makeBtn = (className, text) => {
-        const btn = document.createElement('button');
-        btn.className = className;
-        btn.innerHTML = text;
-        return btn;
-    };
-
-    const updateBtn = makeBtn('updateBtn', '修正');
-    const deleteBtn = makeBtn('deleteBtn', '削除');
-    
-    ikkulist.appendChild(li);
+    const updateBtn = createBtn('updateBtn', '修正');
     li.appendChild(updateBtn);
+    const deleteBtn = createBtn('deleteBtn', '削除');
     li.appendChild(deleteBtn);
+    ikkulist.appendChild(li);
 };
+
 
 // Create
 const createFetch = () => {
@@ -46,7 +49,6 @@ const createFetch = () => {
         console.log(error);
     });
 };
-
 postBtn.addEventListener('click', createFetch, false);
 
 
