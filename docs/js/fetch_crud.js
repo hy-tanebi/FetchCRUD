@@ -24,6 +24,46 @@ const appendList = (thisData) => {
 };
 
 
+// Update Area
+const appendUpdateInput =  (thisIkku) => {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.name = 'updateIkku';
+    input.size = '30';
+    input.maxlength = '30px';
+    input.className = 'updateIkku';
+    input.value = thisIkku;
+    return input;
+};
+
+
+const appendUpdateBtn = () => {
+    const btn = document.createElement('input');
+    btn.type = 'button';
+    btn.value = '送信';
+    btn.className = 'updateBtn';
+    return btn;
+};
+
+
+const appendUpdateArea = (thisLi) => {
+    const thisIkku = thisLi.firstChild.textContent;
+    const appendDiv = document.createElement('div');
+    appendDiv.className = 'updateArea';
+    appendDiv.appendChild(appendUpdateInput(thisIkku));
+    appendDiv.appendChild(appendUpdateBtn());
+    thisLi.appendChild(appendDiv);
+};
+
+
+document.addEventListener('click', (e) => {
+    if (e.target.className ==='doUpdate') {
+        const thisLi = e.target.closest('li');
+        appendUpdateArea(thisLi);
+    } 
+}, false);
+
+
 // Create
 const createFetch = () => {
     const data = {
@@ -71,48 +111,15 @@ readFetch();
 
 
 // Update
-const appendUpdateInput =  (thisIkku) => {
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.name = 'updateIkku';
-    input.size = '30';
-    input.maxlength = '30px';
-    input.className = 'updateIkku';
-    input.value = thisIkku;
-    return input;
-};
-
-
-const appendUpdateBtn = () => {
-    const btn = document.createElement('input');
-    btn.type = 'button';
-    btn.value = '送信';
-    btn.className = 'updateBtn';
-    return btn;
-};
-
-
-const appendUpdateArea = (thisLi) => {
-    const thisIkku = thisLi.firstChild.textContent;
-    const appendDiv = document.createElement('div');
-    appendDiv.className = 'updateArea';
-    appendDiv.appendChild(appendUpdateInput(thisIkku));
-    appendDiv.appendChild(appendUpdateBtn());
-    thisLi.appendChild(appendDiv);
-};
-
-
-document.addEventListener('click', (e) => {
-    if (e.target.className ==='doUpdate') {
-        const thisLi = e.target.closest('li');
-        appendUpdateArea(thisLi);
-    } 
-}, false);
-
-
-const updateFetch = (thisLi, thisId, data) => {
+const updateFetch = (thisLi) => {
+    const thisId = thisLi.dataset.id;
     const updateUrl = url + '/' + thisId;
     const updateArea = thisLi.querySelector('.updateArea');
+    const updateIkku = thisLi.querySelector('.updateIkku').value;
+    const data = {
+        ikku: updateIkku
+    };
+    
     fetch(updateUrl, {
         method: 'PUT',
         headers: {
@@ -136,12 +143,6 @@ const updateFetch = (thisLi, thisId, data) => {
 document.addEventListener('click', (e) => {
     if (e.target.className ==='updateBtn') {
         const thisLi = e.target.closest('li');
-        const thisId = thisLi.dataset.id;
-        const thisInput = thisLi.querySelector('.updateIkku').value;
-        console.log(thisInput);
-        const data = {
-            ikku: thisInput
-        };
-        updateFetch(thisLi, thisId, data);
+        updateFetch(thisLi);
     } 
 }, false);
