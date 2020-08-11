@@ -57,10 +57,13 @@ const appendUpdateArea = (thisLi) => {
 
 
 document.addEventListener('click', (e) => {
-    if (e.target.className ==='doUpdate') {
-        const thisLi = e.target.closest('li');
+    if (e.target.className !=='doUpdate') {
+        return;
+    }
+    const thisLi = e.target.closest('li');
+    if (thisLi.querySelector('.updateArea') === null) {
         appendUpdateArea(thisLi);
-    } 
+    }
 }, false);
 
 
@@ -141,10 +144,11 @@ const updateFetch = (thisLi) => {
 };
 
 document.addEventListener('click', (e) => {
-    if (e.target.className ==='updateBtn') {
-        const thisLi = e.target.closest('li');
-        updateFetch(thisLi);
+    if (e.target.className !=='updateBtn') {
+        return;
     } 
+    const thisLi = e.target.closest('li');
+    updateFetch(thisLi);
 }, false);
 
 
@@ -168,8 +172,9 @@ const deleteFetch = (thisLi) => {
 };
 
 document.addEventListener('click', (e) => {
-    if (e.target.className ==='doDelete') {
-        const thisLi = e.target.closest('li');
-        deleteFetch(thisLi);
+    if (e.target.className !=='doDelete') {
+        return;
     } 
+    const thisLi = e.target.closest('li');
+    deleteFetch(thisLi);
 }, false);
