@@ -4,69 +4,6 @@ const ikkulist = document.querySelector('.ikkuList');
 const url = 'http://localhost:3000/ikku';
 
 
-const appendBtn = (className, text) => {
-    const btn = document.createElement('button');
-    btn.className = className;
-    btn.innerHTML = text;
-    return btn;
-};
-
-
-const appendList = (thisData) => {
-    const li = document.createElement('li');
-    li.dataset.id = thisData.id;
-    li.innerHTML = thisData.ikku;
-    const updateBtn = appendBtn('doUpdate', '修正');
-    li.appendChild(updateBtn);
-    const deleteBtn = appendBtn('doDelete', '削除');
-    li.appendChild(deleteBtn);
-    ikkulist.appendChild(li);
-};
-
-
-// Update Area
-const appendUpdateInput =  (thisIkku) => {
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.name = 'updateIkku';
-    input.size = '30';
-    input.maxlength = '30px';
-    input.className = 'updateIkku';
-    input.value = thisIkku;
-    return input;
-};
-
-
-const appendUpdateBtn = () => {
-    const btn = document.createElement('input');
-    btn.type = 'button';
-    btn.value = '送信';
-    btn.className = 'updateBtn';
-    return btn;
-};
-
-
-const appendUpdateArea = (thisLi) => {
-    const thisIkku = thisLi.firstChild.textContent;
-    const appendDiv = document.createElement('div');
-    appendDiv.className = 'updateArea';
-    appendDiv.appendChild(appendUpdateInput(thisIkku));
-    appendDiv.appendChild(appendUpdateBtn());
-    thisLi.appendChild(appendDiv);
-};
-
-
-document.addEventListener('click', (e) => {
-    if (e.target.className !=='doUpdate') {
-        return;
-    }
-    const thisLi = e.target.closest('li');
-    if (thisLi.querySelector('.updateArea') === null) {
-        appendUpdateArea(thisLi);
-    }
-}, false);
-
-
 // Create
 const createFetch = () => {
     const data = {
@@ -90,6 +27,7 @@ const createFetch = () => {
         console.log(error);
     });
 };
+
 postBtn.addEventListener('click', createFetch, false);
 
 
@@ -110,6 +48,7 @@ const readFetch = () => {
         console.log(error);
     });
 };
+
 readFetch();
 
 
@@ -177,4 +116,69 @@ document.addEventListener('click', (e) => {
     } 
     const thisLi = e.target.closest('li');
     deleteFetch(thisLi);
+}, false);
+
+
+// Append Button
+const appendBtn = (className, text) => {
+    const btn = document.createElement('button');
+    btn.className = className;
+    btn.innerHTML = text;
+    return btn;
+};
+
+
+// Append List
+const appendList = (thisData) => {
+    const li = document.createElement('li');
+    li.dataset.id = thisData.id;
+    li.innerHTML = thisData.ikku;
+    const updateBtn = appendBtn('doUpdate', '修正');
+    li.appendChild(updateBtn);
+    const deleteBtn = appendBtn('doDelete', '削除');
+    li.appendChild(deleteBtn);
+    ikkulist.appendChild(li);
+};
+
+
+// Append Update Area
+const appendUpdateInput =  (thisIkku) => {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.name = 'updateIkku';
+    input.size = '30';
+    input.maxlength = '30px';
+    input.className = 'updateIkku';
+    input.value = thisIkku;
+    return input;
+};
+
+
+const appendUpdateBtn = () => {
+    const btn = document.createElement('input');
+    btn.type = 'button';
+    btn.value = '送信';
+    btn.className = 'updateBtn';
+    return btn;
+};
+
+
+const appendUpdateArea = (thisLi) => {
+    const thisIkku = thisLi.firstChild.textContent;
+    const appendDiv = document.createElement('div');
+    appendDiv.className = 'updateArea';
+    appendDiv.appendChild(appendUpdateInput(thisIkku));
+    appendDiv.appendChild(appendUpdateBtn());
+    thisLi.appendChild(appendDiv);
+};
+
+
+document.addEventListener('click', (e) => {
+    if (e.target.className !=='doUpdate') {
+        return;
+    }
+    const thisLi = e.target.closest('li');
+    if (thisLi.querySelector('.updateArea') === null) {
+        appendUpdateArea(thisLi);
+    }
 }, false);
