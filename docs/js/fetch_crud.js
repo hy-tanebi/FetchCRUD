@@ -153,7 +153,6 @@ const appendUpdateInput =  (thisIkku) => {
     return input;
 };
 
-
 const appendUpdateBtn = () => {
     const btn = document.createElement('input');
     btn.type = 'button';
@@ -161,7 +160,6 @@ const appendUpdateBtn = () => {
     btn.className = 'updateBtn';
     return btn;
 };
-
 
 const appendUpdateArea = (thisLi) => {
     const thisIkku = thisLi.firstChild.textContent;
@@ -171,7 +169,6 @@ const appendUpdateArea = (thisLi) => {
     appendDiv.appendChild(appendUpdateBtn());
     thisLi.appendChild(appendDiv);
 };
-
 
 document.addEventListener('click', (e) => {
     if (e.target.className !=='doUpdate') {
