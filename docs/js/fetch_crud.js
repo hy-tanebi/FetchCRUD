@@ -18,6 +18,7 @@ const createFetch = () => {
     }).then((response) => {
         if(!response.ok) {
             console.log('Create error!');
+            throw new Error('error');
         } 
         console.log('Create ok!');
         return response.json();
@@ -36,6 +37,7 @@ const readFetch = () => {
     fetch(url).then((response) => {
         if(!response.ok) {
             console.log('Read error!');
+            throw new Error('error');
         } 
         console.log('Read ok!');
         return response.json();
@@ -71,6 +73,7 @@ const updateFetch = (thisLi) => {
     }).then((response) => {
         if(!response.ok) {
             console.log('Update error!');
+            throw new Error('error');
         } 
         console.log('Update ok!');
         return response.json();
@@ -101,6 +104,7 @@ const deleteFetch = (thisLi) => {
     }).then((response) => {
         if(!response.ok) {
             console.log('Delete error!');
+            throw new Error('error');
         } 
         console.log('Delete ok!');
     }).then(()  => {
