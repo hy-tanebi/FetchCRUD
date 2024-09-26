@@ -1,0 +1,17 @@
+{
+  "name": "fetchcrud",
+  "version": "1.0.0",
+  "description": "ブログ記事 https://www.i-ryo.com/entry/2020/08/13/205750",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "json-server": "^1.0.0-beta.3"
+  }
+}
